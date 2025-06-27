@@ -1,5 +1,6 @@
 package com.telusko.SpringSecEx.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,12 +10,13 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="Users")
+@Table(name = "Users")
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "user_id")  // Maps to column `user_id` in the database
+    private Integer userId;    // ✅ Java-style property
 
     private String username;
 
@@ -22,6 +24,5 @@ public class Users {
 
     private String role;
 
-    
     private String designation;
 }
