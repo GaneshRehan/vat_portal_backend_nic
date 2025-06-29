@@ -24,5 +24,9 @@ public class UserController {
         return service.verify(user);
     }
 
-    
+    @GetMapping("/")
+    public String home() {
+        return "API is running";
+    }
+
 }
