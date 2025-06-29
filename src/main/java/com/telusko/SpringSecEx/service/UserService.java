@@ -32,27 +32,24 @@ public class UserService {
     } 
 
   
-public String verify(Users user) {
-    // Step 1: Authenticate username and password
-    Authentication authentication = authManager.authenticate(
-        new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-    );
-
-    // Step 2: If credentials are valid
-    if (authentication.isAuthenticated()) {
-        // Fetch the actual user from DB
-        Users dbUser = repo.findByUsername(user.getUsername());
-
-        // Step 3: Compare roles
-        if (dbUser != null && dbUser.getRole().equals(user.getRole())) {
-            return jwtService.generateToken(user.getUsername());
-        } else {
-            return "Role mismatch or user not found";
+    public String verify(Users user) {
+        try {
+            // Step 1: Authenticate
+            Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
+    
+            // Step 2: Generate token using authenticated principal
+            if (authentication.isAuthenticated()) {
+                UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+                return jwtService.generateToken(principal.getUsername());
+            }
+    
+        } catch (Exception e) {
+            e.printStackTrace(); // Optional: log this properly
         }
-    } else {
+    
         return "Authentication failed";
     }
-}
 
-    
 }
