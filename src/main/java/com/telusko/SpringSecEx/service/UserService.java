@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.telusko.SpringSecEx.model.Users;
 import com.telusko.SpringSecEx.repo.UserRepo;
+import com.telusko.SpringSecEx.model.UserPrincipal;
 
 @Service
 public class UserService {
