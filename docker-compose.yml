@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    container_name: vat_postgres
+    environment:
+      POSTGRES_DB: vat_auth_db
+      POSTGRES_USER: vat_user
+      POSTGRES_PASSWORD: anirban@780
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  app:
+    build: .
+    container_name: vat_backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/vat_auth_db
+      SPRING_DATASOURCE_USERNAME: vat_user
+      SPRING_DATASOURCE_PASSWORD: anirban@780
+    depends_on:
+      - db
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:

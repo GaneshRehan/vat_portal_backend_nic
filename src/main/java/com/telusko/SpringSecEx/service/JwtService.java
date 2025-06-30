@@ -1,16 +1,13 @@
 package com.telusko.SpringSecEx.service;
 
-
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,72 +19,56 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    private String secretkey="";
+    // ✅ Store secret in application.properties or hardcoded (at least 256-bit for HS256)
+    @Value("${jwt.secret}")
+    private String secretkey;
 
-    public JwtService(){
-        try{
-        KeyGenerator keyGen=KeyGenerator.getInstance("HmacSHA256");
-           SecretKey sk=keyGen.generateKey();
-           secretkey=Base64.getEncoder().encodeToString(sk.getEncoded());
-        }
-        catch(NoSuchAlgorithmException e){
-           throw new RuntimeException(e);
-        }
-    }
-
-    public String generateToken(String username){
-
-        //key is always string but value can be any data type
-        Map<String,Object> claims=new HashMap<>();
+    public String generateToken(String username) {
+        Map<String, Object> claims = new HashMap<>();
 
         return Jwts.builder()
-                   .claims()
-                   .add(claims)
-                   .subject(username)
-                   .issuedAt(new Date(System.currentTimeMillis()))
-                   .expiration(new Date(System.currentTimeMillis()+60*60*30))
-                   .and()  //also we want to sign it
-                   .signWith(getKey()) //Generate key here
-                   .compact();
-
-        
+                .claims()
+                    .add(claims)
+                    .subject(username)
+                    .issuedAt(new Date(System.currentTimeMillis()))
+                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // 30 minutes
+                    .and()
+                .signWith(getKey())
+                .compact();
     }
 
-    private SecretKey getKey(){
-        byte[] keyBytes=Decoders.BASE64.decode(secretkey);
-        return Keys.hmacShaKeyFor(keyBytes);
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
-    public String extractUsername(String token){
-      return extractClaim(token,claims->claims.getSubject());
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private <T> T extractClaim(String token,Function<Claims,T> claimResolver){
-        final Claims claims=extractAllClaims(token);
-        return claimResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token){
-        return Jwts.parser()
-                   .verifyWith(getKey())
-                   .build()
-                   .parseSignedClaims(token)
-                   .getPayload();
-
-    }
-
-    public boolean validateToken(String token,UserDetails userDetails){
-        final String userName=extractUsername(token);
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
-
-    private boolean isTokenExpired(String token){
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
     private Date extractExpiration(String token) {
-        return extractClaim(token,claims->claims.getExpiration());
+        return extractClaim(token, Claims::getExpiration);
     }
 
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
 
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private SecretKey getKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretkey);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 }

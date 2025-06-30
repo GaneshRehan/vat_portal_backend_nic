@@ -1,0 +1,68 @@
+package com.telusko.SpringSecEx.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.telusko.SpringSecEx.dto.ApprovalRequestDto;
+import com.telusko.SpringSecEx.dto.InspectionRequestDto;
+import com.telusko.SpringSecEx.dto.RegistrationDto;
+import com.telusko.SpringSecEx.model.Registration;
+import com.telusko.SpringSecEx.service.RegistrationService;
+
+@RestController
+@RequestMapping("/api/registration")
+public class RegistrationController {
+
+    @Autowired
+    private RegistrationService registrationService;
+
+    @GetMapping(params = { "assignedCheckerId", "status" })
+    public List<Registration> getRegistrationsByCheckerAndStatus(
+            @RequestParam Long assignedCheckerId,
+            @RequestParam String status) {
+        return registrationService.getRegistrationsByCheckerAndStatus(assignedCheckerId, status);
+    }
+
+    @GetMapping(params = "status")
+    public List<Registration> getRegistrationsByStatus(@RequestParam String status) {
+        return registrationService.getRegistrationsByStatus(status);
+    }
+
+    /**
+     * 3.3 Submit Inspection (Checker)
+     */
+
+    @PutMapping("/{ackNo}/inspection")
+    public ResponseEntity<String> submitInspection(
+        @PathVariable String ackNo,
+        @RequestBody InspectionRequestDto dto
+    ) {
+        registrationService.submitInspection(ackNo, dto);
+        return ResponseEntity.ok("Inspection submitted for ackNo: " + ackNo);
+    }
+
+     /**
+     * 3.4 Get Full Registration + Inspection Details (Approver)
+     */
+    @GetMapping("/{ackNo}")
+    public ResponseEntity<RegistrationDto> getRegistrationWithInspection(
+        @PathVariable String ackNo
+    ) {
+        RegistrationDto dto = registrationService.getRegistrationWithInspection(ackNo);
+        return ResponseEntity.ok(dto);
+    }
+
+    /**
+     * 3.5 Submit Final Approval
+     */
+    @PutMapping("/{ackNo}/approval")
+    public ResponseEntity<String> submitApproval(
+            @PathVariable String ackNo,
+            @RequestBody ApprovalRequestDto dto) {
+        String tin = registrationService.submitApproval(ackNo, dto);
+        return ResponseEntity.ok("Approval processed. TIN: " + tin);
+    }
+}
