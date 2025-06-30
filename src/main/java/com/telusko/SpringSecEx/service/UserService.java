@@ -23,16 +23,13 @@ public class UserService {
     @Autowired
     private JwtService jwtService;
 
-    private BCryptPasswordEncoder encoder=new BCryptPasswordEncoder(12);
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public Users register(Users user){
+    public Users register(Users user) {
         user.setPassword(encoder.encode(user.getPassword()));
         return repo.save(user);
+    }
 
-        //however for postman if we use normal password it will show not authorized, as in security configure there was noPasswordEncoder. So we need to change that
-    } 
-
-  
     public String verify(Users user) {
         try {
             // Step 1: Authenticate
@@ -54,3 +51,4 @@ public class UserService {
     }
 
 }
+   
