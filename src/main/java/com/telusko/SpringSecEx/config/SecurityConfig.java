@@ -32,7 +32,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/register", "/login").permitAll()
+            .requestMatchers("/", "/register", "/login").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session
