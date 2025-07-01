@@ -68,7 +68,7 @@ public class RegistrationController {
         String tin = registrationService.submitApproval(ackNo, dto);
         return ResponseEntity.ok("Approval processed. TIN: " + tin);
     }
-}
+
 
     private CstDetailsService cstDetailsService;
 
