@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.telusko.SpringSecEx.model.Users;
 import com.telusko.SpringSecEx.repo.UserRepo;
+import com.telusko.SpringSecEx.model.UserPrincipal;
 
 @Service
 public class UserService {
@@ -30,16 +31,24 @@ public class UserService {
     }
 
     public String verify(Users user) {
-        // Step 1: Authenticate username and password
-        Authentication authentication = authManager.authenticate(
-            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
-
-        // Step 2: If authenticated, generate JWT token
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
-        } else {
-            return "Authentication failed";
+        try {
+            // Step 1: Authenticate
+            Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
+    
+            // Step 2: Generate token using authenticated principal
+            if (authentication.isAuthenticated()) {
+                UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+                return jwtService.generateToken(principal.getUsername());
+            }
+    
+        } catch (Exception e) {
+            e.printStackTrace(); // Optional: log this properly
         }
+    
+        return "Authentication failed";
     }
+
 }
+   
