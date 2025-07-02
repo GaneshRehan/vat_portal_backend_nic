@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.telusko.SpringSecEx.dto.AcknowledgementDetailsDto;
 import com.telusko.SpringSecEx.dto.ApprovalRequestDto;
 import com.telusko.SpringSecEx.dto.InspectionRequestDto;
 import com.telusko.SpringSecEx.dto.RegistrationDto;
@@ -193,4 +194,10 @@ public class RegistrationService {
 
         return reg.getTinNumber();
     }
+
+    public AcknowledgementDetailsDto getAcknowledgementDetails(String ackNo) {
+    return registrationRepo.getAcknowledgementDetails(ackNo);
+}
+
+
 }
