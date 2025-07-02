@@ -8,4 +8,6 @@ import com.telusko.SpringSecEx.model.InspectionDetail;
 
 public interface InspectionDetailRepo extends JpaRepository<InspectionDetail, Long> {
     Optional<InspectionDetail> findByRegId(Long regId);
+    Optional<InspectionDetail> findByAckNo(String ackNo);
+
 }

@@ -16,6 +16,14 @@ import lombok.Data;
 @Table(name = "inspection_details")
 public class InspectionDetail {
 
+    
+    @Column(name = "ack_no")
+    private String ackNo;
+    
+    @Column(name = "assigned_to")
+    private String assignedTo;
+
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inspectionId;
