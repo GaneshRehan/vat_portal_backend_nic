@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.telusko.SpringSecEx.model.Users;
 import com.telusko.SpringSecEx.repo.UserRepo;
+import com.telusko.SpringSecEx.dto.InspectorDto;
 import com.telusko.SpringSecEx.model.UserPrincipal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -48,6 +51,13 @@ public class UserService {
         }
     
         return "Authentication failed";
+    }
+
+    public List<InspectorDto> getAllInspectors() {
+        List<Users> inspectors = repo.findByRoleIgnoreCase("INSPECTOR");
+        return inspectors.stream()
+                .map(user -> new InspectorDto(user.getUsername()))
+                .collect(Collectors.toList());
     }
 
 }

@@ -11,27 +11,21 @@ import com.telusko.SpringSecEx.model.Users;
 import com.telusko.SpringSecEx.service.UserService;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
 @RestController
-public class UserController {
+@RequestMapping("/api")  // applies only to inspector endpoints
+public class InspectorController {
 
-    @Autowired
-    private UserService service;
+    private final UserService userService;
 
-    @PostMapping("/register")
-    public Users register(@RequestBody Users user){
-       return service.register(user);
+    public InspectorController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody Users user){
-        return service.verify(user);
+    @GetMapping("/inspectors")
+    public List<InspectorDto> getInspectors() {
+        return userService.getAllInspectors();
     }
-
-    @GetMapping("/")
-    public String home() {
-        return "API is running";
-    }
-
-    
-
 }
