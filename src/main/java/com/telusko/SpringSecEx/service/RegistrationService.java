@@ -40,7 +40,7 @@ public class RegistrationService {
      * @return List of registrations
      * @throws IllegalArgumentException if checkerId or status is invalid
      */
-    public List<Registration> getRegistrationsByCheckerAndStatus(Long checkerId, String status) {
+    public List<Registration> getRegistrationsByCheckerAndStatus(String checkerId, String status) {
         if (checkerId == null || status == null || status.trim().isEmpty()) {
             throw new IllegalArgumentException("Checker ID and status must not be null or empty");
         }
@@ -76,7 +76,7 @@ public class RegistrationService {
         Registration reg = registrationRepo.findByAckNo(ackNo)
                 .orElseThrow(() -> new IllegalArgumentException("Registration not found for ackNo: " + ackNo));
 
-        Long regId = reg.getRegId();
+        String regId = reg.getRegId();
 
         // Check if an InspectionDetail already exists for this regId
         Optional<InspectionDetail> existingOpt = inspectionRepo.findByRegId(regId);

@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RegistrationRepo extends JpaRepository<Registration, Long> {
+public interface RegistrationRepo extends JpaRepository<Registration, String> {
 
     // 3.1: For Checker Dashboard - Get registrations by checker ID and status
-    List<Registration> findByEnteredByAndStatus(Long userId, String status);
+    List<Registration> findByEnteredByAndStatus(String userId, String status);
 
     // 3.2: For Approver Dashboard - Get registrations by status
     List<Registration> findByStatus(String status);

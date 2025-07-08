@@ -17,13 +17,13 @@ public class Registration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long regId;
+    private String regId;
 
     @Column(nullable = false, unique = true)
     private String ackNo;
 
     @Column(nullable = false)
-    private Integer enteredBy; // FK to users(user_id)
+    private String enteredBy; // FK to users(user_id)
 
     @Column(nullable = false)
     private String registrationType;
