@@ -3,15 +3,22 @@ package com.telusko.SpringSecEx.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @Entity
-@Table(name = "acknowledgements")
+@Table(name = "cst_details")
 public class CstDetails {
+
     @Id
-    @NotBlank(message = "ackNo is required")
     @Column(name = "ack_no")
     private String ackNo;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "ack_no")
+    @JsonIgnore
+    private Acknowledgement acknowledgement;
 
     @NotBlank(message = "cstNumber is required")
     @Column(name = "cst_number")
