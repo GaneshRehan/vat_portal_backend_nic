@@ -27,7 +27,7 @@ public class RegistrationController {
 
     @GetMapping(params = { "assignedCheckerId", "status" })
     public List<Registration> getRegistrationsByCheckerAndStatus(
-            @RequestParam Long assignedCheckerId,
+            @RequestParam String assignedCheckerId,
             @RequestParam String status) {
         return registrationService.getRegistrationsByCheckerAndStatus(assignedCheckerId, status);
     }
