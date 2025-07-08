@@ -32,13 +32,14 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/register", "/login").permitAll()
-                .anyRequest().authenticated()
+                //.requestMatchers("/", "/register", "/login").permitAll()
+                //.anyRequest().authenticated()
+                .anyRequest().permitAll()  // allow everything
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
 
