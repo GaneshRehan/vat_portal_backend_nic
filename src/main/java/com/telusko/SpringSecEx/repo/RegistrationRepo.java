@@ -14,10 +14,10 @@ import java.util.Optional;
 public interface RegistrationRepo extends JpaRepository<Registration, Long> {
 
     // 3.1: For Checker Dashboard - Get registrations by checker ID and status
-    List<Registration> findByEnteredByAndStatus(Long userId, String status);
+    List<Registration> findByEnteredByAndStatusIgnoreCase(Long userId, String status);
 
     // 3.2: For Approver Dashboard - Get registrations by status
-    List<Registration> findByStatus(String status);
+    List<Registration> findByStatusIgnoreCase(String status);
 
     // 3.4 - Get registration by ackNo
     Optional<Registration> findByAckNo(Long ackNo);

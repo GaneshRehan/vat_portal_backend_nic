@@ -46,7 +46,7 @@ public class RegistrationService {
         if (checkerId == null || status == null || status.trim().isEmpty()) {
             throw new IllegalArgumentException("Checker ID and status must not be null or empty");
         }
-        return registrationRepo.findByEnteredByAndStatus(checkerId, status);
+        return registrationRepo.findByEnteredByAndStatusIgnoreCase(checkerId, status);
     }
 
     /**
@@ -60,7 +60,7 @@ public class RegistrationService {
         if (status == null || status.trim().isEmpty()) {
             throw new IllegalArgumentException("Status must not be null or empty");
         }
-        return registrationRepo.findByStatus(status);
+        return registrationRepo.findByStatusIgnoreCase(status);
     }
 
     /**
