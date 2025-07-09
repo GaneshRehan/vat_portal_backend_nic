@@ -19,8 +19,9 @@ services:
     build: .
     container_name: vat_backend
     ports:
-      - "8080:8080"
+      - "${PORT:-8080}:${PORT:-8080}"  # Allow dynamic port for compatibility
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/vat_auth_db
       SPRING_DATASOURCE_USERNAME: vat_user
       SPRING_DATASOURCE_PASSWORD: anirban@780
@@ -28,6 +29,7 @@ services:
       - db
     networks:
       - backend
+
 
 volumes:
   pgdata:

@@ -20,8 +20,8 @@ WORKDIR /vat-nic-backend-demo
 # Copy the built jar from the builder stage
 COPY --from=builder /vat-nic-backend-demo/target/*.jar app.jar
 
-# Expose the application's port
-EXPOSE 8080
+# Expose the application's port 8083(local)
+EXPOSE 10000 
 
 # Start the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
