@@ -18,7 +18,7 @@ public class InspectionController {
 
     @PutMapping("/assign/{ackNo}")
     public ResponseEntity<AssignInspectorResponseDto> assignInspector(
-            @PathVariable String ackNo,
+            @PathVariable Long ackNo,
             @RequestBody AssignInspectorRequestDto requestDto
     ) {
         AssignInspectorResponseDto response = inspectionService.assignInspector(ackNo, requestDto);

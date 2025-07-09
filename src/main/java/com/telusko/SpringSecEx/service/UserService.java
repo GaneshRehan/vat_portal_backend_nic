@@ -1,11 +1,15 @@
 package com.telusko.SpringSecEx.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.telusko.SpringSecEx.dto.InspectorDto;
 import com.telusko.SpringSecEx.dto.LoginRequest;
 import com.telusko.SpringSecEx.dto.LoginResponse;
 import com.telusko.SpringSecEx.model.Users;
@@ -44,5 +48,12 @@ public class UserService {
 
         String token = jwtService.generateToken(user.getUsername());
         return new LoginResponse(token, user.getRole(), user.getDesignation());
+    }
+
+    public List<InspectorDto> getAllInspectors() {
+        List<Users> inspectors = repo.findByRoleIgnoreCase("INSPECTOR");
+        return inspectors.stream()
+                .map(u -> new InspectorDto(u.getUsername(), u.getDesignation()))
+                .collect(Collectors.toList());
     }
 }
