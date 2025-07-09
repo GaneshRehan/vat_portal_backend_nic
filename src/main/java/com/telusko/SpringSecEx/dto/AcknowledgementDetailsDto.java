@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
-import com.telusko.SpringSecEx.model.Users;
-
 public class AcknowledgementDetailsDto {
 
     private Long ackNo;
@@ -19,13 +17,21 @@ public class AcknowledgementDetailsDto {
     private LocalDate payDate;
     private String bankName;
     private BigDecimal totalAmount;
-    private Users assignedTo;
+    private String assignedTo;  // now holds the username
 
     // Constructor for JPQL projection
-    public AcknowledgementDetailsDto(Long ackNo, OffsetDateTime createdAt, LocalDate ackDate,
-                                     String registrationType, String applicantName, String tradeName,
-                                     String payMode, String payNo, LocalDate payDate,
-                                     String bankName, BigDecimal totalAmount, String assignedTo) {
+    public AcknowledgementDetailsDto(Long ackNo,
+                                     OffsetDateTime createdAt,
+                                     LocalDate ackDate,
+                                     String registrationType,
+                                     String applicantName,
+                                     String tradeName,
+                                     String payMode,
+                                     String payNo,
+                                     LocalDate payDate,
+                                     String bankName,
+                                     BigDecimal totalAmount,
+                                     String assignedTo) {
         this.ackNo = ackNo;
         this.createdAt = createdAt;
         this.ackDate = ackDate;
@@ -41,16 +47,51 @@ public class AcknowledgementDetailsDto {
     }
 
     // Getters (required for JSON serialization)
-    public Long getAckNo() { return ackNo; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
-    public LocalDate getAckDate() { return ackDate; }
-    public String getRegistrationType() { return registrationType; }
-    public String getApplicantName() { return applicantName; }
-    public String getTradeName() { return tradeName; }
-    public String getPayMode() { return payMode; }
-    public String getPayNo() { return payNo; }
-    public LocalDate getPayDate() { return payDate; }
-    public String getBankName() { return bankName; }
-    public BigDecimal getTotalAmount() { return totalAmount; }
-    public String getAssignedTo() { return assignedTo; }
+    public Long getAckNo() {
+        return ackNo;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDate getAckDate() {
+        return ackDate;
+    }
+
+    public String getRegistrationType() {
+        return registrationType;
+    }
+
+    public String getApplicantName() {
+        return applicantName;
+    }
+
+    public String getTradeName() {
+        return tradeName;
+    }
+
+    public String getPayMode() {
+        return payMode;
+    }
+
+    public String getPayNo() {
+        return payNo;
+    }
+
+    public LocalDate getPayDate() {
+        return payDate;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public String getAssignedTo() {
+        return assignedTo;
+    }
 }
