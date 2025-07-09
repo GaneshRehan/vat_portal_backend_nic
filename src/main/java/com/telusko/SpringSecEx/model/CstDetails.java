@@ -12,7 +12,7 @@ public class CstDetails {
 
     @Id
     @Column(name = "ack_no")
-    private String ackNo;
+    private Long ackNo;
 
     @OneToOne
     @MapsId
