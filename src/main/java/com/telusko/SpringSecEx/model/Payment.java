@@ -13,7 +13,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
-    private String paymentId;
+    private Long paymentId;
 
     @Column(name = "tin")
     private String tin;

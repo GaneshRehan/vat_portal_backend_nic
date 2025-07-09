@@ -17,7 +17,7 @@ public class Registration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String regId;
+    private Long regId;
 
     @Column(nullable = false, unique = true)
     private String ackNo;

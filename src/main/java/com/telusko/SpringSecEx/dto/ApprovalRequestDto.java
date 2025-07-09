@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ApprovalRequestDto {
     
-    private String approverId;
+    private Integer approverId;
     private Boolean allYes;
     private String approverComments;
     private String approvalStatus;

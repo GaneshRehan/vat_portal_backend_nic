@@ -26,10 +26,10 @@ public class InspectionDetail {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String inspectionId;
+    private Long inspectionId;
 
     @Column(name = "reg_id", unique = true, nullable = false)
-    private String regId;
+    private Long regId;
 
     private LocalDate dateOfVisit;
     private String natureOfBusiness;

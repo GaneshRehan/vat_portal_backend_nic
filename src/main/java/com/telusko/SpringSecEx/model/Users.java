@@ -16,7 +16,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")  // Maps to column `user_id` in the database
-    private String userId;    // ✅ Java-style property
+    private Integer userId;    // ✅ Java-style property
 
     private String username;
 

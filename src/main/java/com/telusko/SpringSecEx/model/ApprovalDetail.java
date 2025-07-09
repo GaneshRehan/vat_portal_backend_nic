@@ -17,13 +17,13 @@ public class ApprovalDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String approvalId;
+    private Long approvalId;
 
     @Column(nullable = false)
     private String ackNo;
 
     @Column(nullable = false)
-    private String approverId;
+    private Integer approverId;
 
     private Boolean allYes;
     private String approverComments;

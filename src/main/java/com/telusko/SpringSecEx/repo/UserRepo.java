@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface UserRepo extends JpaRepository<Users, String> {
+public interface UserRepo extends JpaRepository<Users, Integer> {
 
     Users findByUsername(String username);
     List<Users> findByRoleIgnoreCase(String role);

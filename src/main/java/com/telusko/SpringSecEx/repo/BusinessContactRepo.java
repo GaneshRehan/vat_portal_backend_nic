@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface BusinessContactRepo extends JpaRepository<BusinessContact, String> {
+public interface BusinessContactRepo extends JpaRepository<BusinessContact, Integer> {
     @Query("SELECT b FROM BusinessContact b WHERE LOWER(b.tinNo) = LOWER(:tinNo)")
     Optional<BusinessContact> findByTinNoIgnoreCase(@Param("tinNo") String tinNo);
 
