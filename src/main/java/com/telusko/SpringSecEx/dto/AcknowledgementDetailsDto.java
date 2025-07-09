@@ -1,48 +1,54 @@
 package com.telusko.SpringSecEx.dto;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 public class AcknowledgementDetailsDto {
-    private String ackNo;
-    private LocalDateTime createdAt;
+
+    private Long ackNo;
+    private OffsetDateTime createdAt;
+    private LocalDate ackDate;
     private String registrationType;
     private String applicantName;
     private String tradeName;
-    private String paymentMode;
-    private String paymentWith;
-    private String paidTowards;
-    private String headOfAccount;
-    private Double amountToBePaid;
+    private String payMode;
+    private String payNo;
+    private LocalDate payDate;
+    private String bankName;
+    private BigDecimal totalAmount;
     private String assignedTo;
 
-    // Constructor used in JPQL query
-    public AcknowledgementDetailsDto(String ackNo, LocalDateTime createdAt, String registrationType,
-                                     String applicantName, String tradeName, String paymentMode,
-                                     String paymentWith, String paidTowards, String headOfAccount,
-                                     Double amountToBePaid, String assignedTo) {
+    // Constructor for JPQL projection
+    public AcknowledgementDetailsDto(Long ackNo, OffsetDateTime createdAt, LocalDate ackDate,
+                                     String registrationType, String applicantName, String tradeName,
+                                     String payMode, String payNo, LocalDate payDate,
+                                     String bankName, BigDecimal totalAmount, String assignedTo) {
         this.ackNo = ackNo;
         this.createdAt = createdAt;
+        this.ackDate = ackDate;
         this.registrationType = registrationType;
         this.applicantName = applicantName;
         this.tradeName = tradeName;
-        this.paymentMode = paymentMode;
-        this.paymentWith = paymentWith;
-        this.paidTowards = paidTowards;
-        this.headOfAccount = headOfAccount;
-        this.amountToBePaid = amountToBePaid;
+        this.payMode = payMode;
+        this.payNo = payNo;
+        this.payDate = payDate;
+        this.bankName = bankName;
+        this.totalAmount = totalAmount;
         this.assignedTo = assignedTo;
     }
 
-    // Getters (very important for JSON serialization)
-    public String getAckNo() { return ackNo; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    // Getters (required for JSON serialization)
+    public Long getAckNo() { return ackNo; }
+    public OffsetDateTime getCreatedAt() { return createdAt; }
+    public LocalDate getAckDate() { return ackDate; }
     public String getRegistrationType() { return registrationType; }
     public String getApplicantName() { return applicantName; }
     public String getTradeName() { return tradeName; }
-    public String getPaymentMode() { return paymentMode; }
-    public String getPaymentWith() { return paymentWith; }
-    public String getPaidTowards() { return paidTowards; }
-    public String getHeadOfAccount() { return headOfAccount; }
-    public Double getAmountToBePaid() { return amountToBePaid; }
+    public String getPayMode() { return payMode; }
+    public String getPayNo() { return payNo; }
+    public LocalDate getPayDate() { return payDate; }
+    public String getBankName() { return bankName; }
+    public BigDecimal getTotalAmount() { return totalAmount; }
     public String getAssignedTo() { return assignedTo; }
 }

@@ -71,7 +71,7 @@ public class RegistrationService {
      * @throws IllegalArgumentException if ackNo or DTO is invalid
      */
     @Transactional
-    public InspectionDetail submitInspection(String ackNo, InspectionRequestDto dto) {
+    public InspectionDetail submitInspection(Long ackNo, InspectionRequestDto dto) {
 
         Registration reg = registrationRepo.findByAckNo(ackNo)
                 .orElseThrow(() -> new IllegalArgumentException("Registration not found for ackNo: " + ackNo));
@@ -117,7 +117,7 @@ public class RegistrationService {
      * @throws IllegalArgumentException if ackNo is invalid or registration not
      *                                  found
      */
-    public RegistrationDto getRegistrationWithInspection(String ackNo) {
+    public RegistrationDto getRegistrationWithInspection(Long ackNo) {
 
         Registration reg = registrationRepo.findByAckNo(ackNo)
                 .orElseThrow(() -> new IllegalArgumentException("No registration found for ackNo: " + ackNo));
@@ -168,7 +168,7 @@ public class RegistrationService {
      * @throws IllegalArgumentException if ackNo or DTO is invalid
      */
     @Transactional
-    public String submitApproval(String ackNo, ApprovalRequestDto dto) {
+    public String submitApproval(Long ackNo, ApprovalRequestDto dto) {
 
         Registration reg = registrationRepo.findByAckNo(ackNo)
                 .orElseThrow(() -> new IllegalArgumentException("No registration found for ackNo: " + ackNo));
@@ -195,9 +195,8 @@ public class RegistrationService {
         return reg.getTinNumber();
     }
 
-    public AcknowledgementDetailsDto getAcknowledgementDetails(String ackNo) {
-    return registrationRepo.getAcknowledgementDetails(ackNo);
-}
-
+    public AcknowledgementDetailsDto getAcknowledgementDetails(Long ackNo) {
+        return registrationRepo.getAcknowledgementDetails(ackNo);
+    }
 
 }

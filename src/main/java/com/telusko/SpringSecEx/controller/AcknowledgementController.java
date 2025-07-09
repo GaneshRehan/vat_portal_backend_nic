@@ -14,7 +14,7 @@ public class AcknowledgementController {
     private RegistrationService registrationService;
 
     @GetMapping("/acknowledgements/{ackNo}")
-    public ResponseEntity<AcknowledgementDetailsDto> getAcknowledgementDetails(@PathVariable String ackNo) {
+    public ResponseEntity<AcknowledgementDetailsDto> getAcknowledgementDetails(@PathVariable Long ackNo) {
         AcknowledgementDetailsDto dto = registrationService.getAcknowledgementDetails(ackNo);
         if (dto == null) {
             return ResponseEntity.notFound().build();

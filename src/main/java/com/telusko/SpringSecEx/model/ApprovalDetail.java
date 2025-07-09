@@ -20,7 +20,7 @@ public class ApprovalDetail {
     private Long approvalId;
 
     @Column(nullable = false)
-    private String ackNo;
+    private Long ackNo;
 
     @Column(nullable = false)
     private Integer approverId;

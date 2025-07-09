@@ -40,7 +40,7 @@ public class RegistrationController {
     // 3.3 Submit Inspection (Checker)
     @PutMapping("/{ackNo}/inspection")
     public ResponseEntity<String> submitInspection(
-            @PathVariable String ackNo,
+            @PathVariable Long ackNo,
             @RequestBody InspectionRequestDto dto) {
         registrationService.submitInspection(ackNo, dto);
         return ResponseEntity.ok("Inspection submitted for ackNo: " + ackNo);
@@ -49,7 +49,7 @@ public class RegistrationController {
     // 3.4 Get Full Registration + Inspection Details (Approver)
     @GetMapping("/{ackNo}")
     public ResponseEntity<RegistrationDto> getRegistrationWithInspection(
-            @PathVariable String ackNo) {
+            @PathVariable Long ackNo) {
         RegistrationDto dto = registrationService.getRegistrationWithInspection(ackNo);
         return ResponseEntity.ok(dto);
     }
@@ -57,7 +57,7 @@ public class RegistrationController {
     // 3.5 Submit Final Approval
     @PutMapping("/{ackNo}/approval")
     public ResponseEntity<String> submitApproval(
-            @PathVariable String ackNo,
+            @PathVariable Long ackNo,
             @RequestBody ApprovalRequestDto dto) {
         String tin = registrationService.submitApproval(ackNo, dto);
         return ResponseEntity.ok("Approval processed. TIN: " + tin);

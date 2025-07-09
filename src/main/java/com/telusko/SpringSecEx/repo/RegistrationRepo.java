@@ -20,7 +20,7 @@ public interface RegistrationRepo extends JpaRepository<Registration, Long> {
     List<Registration> findByStatus(String status);
 
     // 3.4 - Get registration by ackNo
-    Optional<Registration> findByAckNo(String ackNo);
+    Optional<Registration> findByAckNo(Long ackNo);
 
     
 @Query("""
@@ -42,7 +42,7 @@ public interface RegistrationRepo extends JpaRepository<Registration, Long> {
     LEFT JOIN com.telusko.SpringSecEx.model.InspectionDetail i ON r.ackNo = i.ackNo
     WHERE r.ackNo = :ackNo
 """)
-AcknowledgementDetailsDto getAcknowledgementDetails(@Param("ackNo") String ackNo);
+AcknowledgementDetailsDto getAcknowledgementDetails(@Param("ackNo") Long ackNo);
 
 
 }
