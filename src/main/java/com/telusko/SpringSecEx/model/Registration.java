@@ -23,7 +23,7 @@ public class Registration {
     private String ackNo;
 
     @Column(nullable = false)
-    private String enteredBy; // FK to users(user_id)
+    private Integer enteredBy; // FK to users(user_id)
 
     @Column(nullable = false)
     private String registrationType;
