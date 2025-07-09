@@ -22,10 +22,6 @@ public interface RegistrationRepo extends JpaRepository<Registration, Long> {
     // 3.4 - Get registration by ackNo
     Optional<Registration> findByAckNo(Long ackNo);
 
-    @Query("SELECT new com.telusko.SpringSecEx.dto.AcknowledgementDetailsDto(" +
-       "r.ackNo, r.createdAt, r.ackDate, r.registrationType, r.applicantName, " +
-       "r.tradeName, r.payMode, r.payNo, r.payDate, r.bankName, r.totalAmount, r.assignedTo) " +
-       "FROM Acknowledgement r WHERE r.ackNo = :ackNo")
-    AcknowledgementDetailsDto getAcknowledgementDetails(Long ackNo);
+    
 
 }
