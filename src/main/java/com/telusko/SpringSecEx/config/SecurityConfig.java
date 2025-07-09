@@ -39,14 +39,14 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(Customizer.withDefaults())   // enabling CORS here
             .authorizeHttpRequests(auth -> auth
-                //.requestMatchers("/", "/register", "/login").permitAll()
-                //.anyRequest().authenticated()
-                .anyRequest().permitAll()  // allow everything
+                .requestMatchers("/", "/register", "/login", "/payments").permitAll()
+                .anyRequest().authenticated()
+                //.anyRequest().permitAll()  // allow everything
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
 
