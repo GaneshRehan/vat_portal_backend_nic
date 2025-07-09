@@ -195,8 +195,4 @@ public class RegistrationService {
         return reg.getTinNumber();
     }
 
-    public AcknowledgementDetailsDto getAcknowledgementDetails(Long ackNo) {
-        return registrationRepo.getAcknowledgementDetails(ackNo);
-    }
-
 }

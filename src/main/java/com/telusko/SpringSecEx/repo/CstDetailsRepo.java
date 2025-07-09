@@ -1,13 +1,14 @@
 package com.telusko.SpringSecEx.repo;
 
-import com.telusko.SpringSecEx.model.CstDetails;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
+import com.telusko.SpringSecEx.model.CstDetails;
 
-public interface CstDetailsRepo extends JpaRepository<CstDetails, String> {
-    @Query("SELECT c FROM CstDetails c WHERE LOWER(c.ackNo) = LOWER(:ackNo)")
-    Optional<CstDetails> findByAckNoIgnoreCase(@Param("ackNo") String ackNo);
+public interface CstDetailsRepo extends JpaRepository<CstDetails, Long> {
+    @Query("SELECT c FROM CstDetails c WHERE c.ackNo = :ackNo")
+    Optional<CstDetails> findByAckNoIgnoreCase(@Param("ackNo") Long ackNo);
 }

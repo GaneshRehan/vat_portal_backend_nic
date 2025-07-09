@@ -1,70 +1,48 @@
 package com.telusko.SpringSecEx.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.telusko.SpringSecEx.model.Users;
-import com.telusko.SpringSecEx.repo.UserRepo;
-import com.telusko.SpringSecEx.dto.InspectorDto;
 import com.telusko.SpringSecEx.dto.LoginRequest;
 import com.telusko.SpringSecEx.dto.LoginResponse;
-import com.telusko.SpringSecEx.model.UserPrincipal;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.telusko.SpringSecEx.model.Users;
+import com.telusko.SpringSecEx.repo.UserRepo;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepo repo;
-
     @Autowired
-    private AuthenticationManager authManager;
-
+    private PasswordEncoder encoder;
     @Autowired
     private JwtService jwtService;
-
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public Users register(Users user) {
         user.setPassword(encoder.encode(user.getPassword()));
         return repo.save(user);
     }
 
-    public LoginResponse verify(LoginRequest request) {
-        try {
-            Authentication authentication = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-
-            if (authentication.isAuthenticated()) {
-                UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-
-                Users user = repo.findByUsername(principal.getUsername());
-                if (user == null) {
-                    throw new RuntimeException("User not found");
-                }
-
-                String token = jwtService.generateToken(principal.getUsername());
-
-                return new LoginResponse(token, user.getRole(), user.getDesignation());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    public LoginResponse verify(LoginRequest req) {
+        Users user = repo.findByUsername(req.getUsername());
+        if (user == null) {
+            System.out.println("→ User not found: " + req.getUsername());
+            return null;
         }
 
-        return null;
-    }
+        String storedHash = user.getPassword();
+        String raw = req.getPassword();
+        
+        //System.out.println("   Raw password in hash:       '" + encoder.encode(raw) + "'");
 
-    public List<InspectorDto> getAllInspectors() {
-        List<Users> inspectors = repo.findByRoleIgnoreCase("INSPECTOR");
-        return inspectors.stream()
-                .map(user -> new InspectorDto(user.getUsername()))
-                .collect(Collectors.toList());
-    }
+        if (!encoder.matches(raw, storedHash)) {
+            return null;
+        }
 
+        String token = jwtService.generateToken(user.getUsername());
+        return new LoginResponse(token, user.getRole(), user.getDesignation());
+    }
 }

@@ -20,7 +20,7 @@ public class Registration {
     private Long regId;
 
     @Column(nullable = false, unique = true)
-    private String ackNo;
+    private Long ackNo;
 
     @Column(nullable = false)
     private Integer enteredBy; // FK to users(user_id)

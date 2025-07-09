@@ -1,8 +1,9 @@
 package com.telusko.SpringSecEx.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.OffsetDateTime;
 
 @Entity
 @Data
@@ -13,10 +14,11 @@ public class BusinessPartners {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "partner_id")
     private Long id; // Maps to partner_id (primary key)
-
+    
+    // link back to main contact
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ack_no")
-    private Acknowledgement acknowledgement; // Foreign key to acknowledgements table
+    @JoinColumn(name = "business_contact_id", nullable = false)
+    private BusinessContact businessContact;
 
     @Column(name = "name")
     private String name; // Maps to personName
@@ -24,30 +26,28 @@ public class BusinessPartners {
     @Column(name = "father_name")
     private String fatherName;
 
-    @Column(name = "address")
+    @Column(name = "street")
     private String street; // Maps to presentAddress
 
-    @Column(name = "address") // same DB column
+    @Column(name = "area") // same DB column
     private String area; // Maps to areaLocality
 
-    @Column(name = "address") // same DB column
+    @Column(name = "place") // same DB column
     private String place; // Maps to villageTownCity
 
     @Column(name = "contact_number")
     private String telephone; // Maps to telNo
 
-    @Column(name = "aadhaar_number")
-    private String dateOfBirth; // Maps to dob (⚠️ inaccurate)
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth; // Maps to dob (⚠️ inaccurate)
 
     @Transient
-    private String dateOfEntry;
+    private LocalDate dateOfEntry;
 
     @Transient
-    private String dateOfLeaving;
+    private LocalDate dateOfLeaving;
 
-    @Column(name = "designation")
+    @Column(name = "type")
     private String type; // Maps to partnerType
 
-    @Column(name = "created_at")
-    private OffsetDateTime createdAt;
 }

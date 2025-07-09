@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class RegistrationDto {
     
-    private String ackNo;
+    private Long ackNo;
     private String registrationType;
     private String applicantName;
     private String tradeName;

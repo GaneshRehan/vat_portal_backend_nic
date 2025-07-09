@@ -28,7 +28,7 @@ public class Payment {
     private String paymentWith;
 
     @Column(name = "ack_no")
-    private String ackNo;
+    private Long ackNo;
 
     @Column(name = "amount_to_be_paid")
     private Double amountToBePaid;

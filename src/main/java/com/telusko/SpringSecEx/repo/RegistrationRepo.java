@@ -23,26 +23,4 @@ public interface RegistrationRepo extends JpaRepository<Registration, Long> {
     Optional<Registration> findByAckNo(Long ackNo);
 
     
-@Query("""
-    SELECT new com.telusko.SpringSecEx.dto.AcknowledgementDetailsDto(
-        r.ackNo,
-        r.createdAt,
-        r.registrationType,
-        r.applicantName,
-        r.tradeName,
-        p.mode,
-        p.paymentWith,
-        p.suspenseName,
-        p.headOfAccount,
-        p.amountToBePaid,
-        i.assignedTo
-    )
-    FROM Registration r
-    LEFT JOIN com.telusko.SpringSecEx.model.Payment p ON r.ackNo = p.ackNo
-    LEFT JOIN com.telusko.SpringSecEx.model.InspectionDetail i ON r.ackNo = i.ackNo
-    WHERE r.ackNo = :ackNo
-""")
-AcknowledgementDetailsDto getAcknowledgementDetails(@Param("ackNo") Long ackNo);
-
-
 }

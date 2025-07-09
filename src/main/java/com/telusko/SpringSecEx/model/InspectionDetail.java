@@ -18,7 +18,7 @@ public class InspectionDetail {
 
     
     @Column(name = "ack_no")
-    private String ackNo;
+    private Long ackNo;
     
     @Column(name = "assigned_to")
     private String assignedTo;

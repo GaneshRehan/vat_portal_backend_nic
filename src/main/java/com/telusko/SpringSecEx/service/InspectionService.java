@@ -15,7 +15,7 @@ public class InspectionService {
         this.inspectionDetailRepo = inspectionDetailRepo;
     }
 
-    public AssignInspectorResponseDto assignInspector(String ackNo, AssignInspectorRequestDto requestDto) {
+    public AssignInspectorResponseDto assignInspector(Long ackNo, AssignInspectorRequestDto requestDto) {
         InspectionDetail detail = inspectionDetailRepo.findByAckNo(ackNo)
                 .orElseThrow(() -> new RuntimeException("Acknowledgement number not found: " + ackNo));
 

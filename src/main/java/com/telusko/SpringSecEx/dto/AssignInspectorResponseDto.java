@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AssignInspectorResponseDto {
-    private String ackNo;
+    private Long ackNo;
     private String assignedTo;
 }

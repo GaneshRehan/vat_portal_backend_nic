@@ -1,59 +1,83 @@
 package com.telusko.SpringSecEx.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Data;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "business_contacts")
 public class BusinessContact {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "tinNo is required")
+    @Column(name = "tin_no", nullable = false)
     private String tinNo;
 
-    @NotBlank(message = "applicantName is required")
-    private String applicantName;
-
+    @Column(name = "sl_no")
     private String slNo;
 
-    @NotBlank(message = "personName is required")
+    @Column(name = "applicant_name")
+    private String applicantName;
+
+    @Column(name = "person_name")
     private String personName;
 
+    @Column(name = "father_name")
     private String fatherName;
 
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "dob must be in YYYY-MM-DD format")
-    private String dob;
+    @Column(name = "date_of_birth")
+    private LocalDate dob;
 
-    @NotBlank(message = "partnerType is required")
+    @Column(name = "partner_type")
     private String partnerType;
 
+    @Column(name = "educational_qualification")
     private String educationalQualification;
 
-    @Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}", message = "panNo must be a valid PAN number")
+    @Column(name = "pan_no")
     private String panNo;
 
+    @Column(name = "present_address", columnDefinition = "TEXT")
     private String presentAddress;
+
+    @Column(name = "area_locality")
     private String areaLocality;
+
+    @Column(name = "village_town_city")
     private String villageTownCity;
+
+    @Column(name = "permanent_address", columnDefinition = "TEXT")
     private String permanentAddress;
+
+    @Column(name = "tel_no")
     private String telNo;
+
+    @Column(name = "fax_no")
     private String faxNo;
 
-    @Email(message = "emailId must be a valid email address")
+    @Column(name = "email_id")
     private String emailId;
 
+    @Column(name = "extent_of_interest")
     private String extentOfInterest;
 
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "dateOfEntry must be in YYYY-MM-DD format")
-    private String dateOfEntry;
+    @Column(name = "date_of_entry")
+    private LocalDate dateOfEntry;
 
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}|", message = "dateOfLeaving must be in YYYY-MM-DD format or empty")
-    private String dateOfLeaving;
+    @Column(name = "date_of_leaving")
+    private LocalDate dateOfLeaving;
 
+    @Column(name = "voters_id")
     private String votersId;
+
+    @Column(name = "residential_cert_no")
     private String residentialCertNo;
+
+    @OneToMany(mappedBy = "businessContact", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BusinessPartners> partners;
 }

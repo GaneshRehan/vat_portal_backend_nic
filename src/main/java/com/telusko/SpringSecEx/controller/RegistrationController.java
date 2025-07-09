@@ -65,7 +65,7 @@ public class RegistrationController {
 
     // CST details by ackNo
     @GetMapping("/{ackNo}/cst-details")
-    public ResponseEntity<?> getCstDetails(@PathVariable String ackNo) {
+    public ResponseEntity<?> getCstDetails(@PathVariable Long ackNo) {
         try {
             CstDetails cstDetails = cstDetailsService.getCstDetailsByAckNo(ackNo);
             return ResponseEntity.ok(cstDetails);

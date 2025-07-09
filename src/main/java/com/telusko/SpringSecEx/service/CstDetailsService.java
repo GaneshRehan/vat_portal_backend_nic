@@ -14,7 +14,7 @@ public class CstDetailsService {
     @Autowired
     private CstDetailsRepo cstDetailsRepo;
 
-    public CstDetails getCstDetailsByAckNo(String ackNo) {
+    public CstDetails getCstDetailsByAckNo(Long ackNo) {
         logger.info("Fetching CST details for ackNo: {}", ackNo);
         CstDetails cstDetails = cstDetailsRepo.findByAckNoIgnoreCase(ackNo)
                 .orElseThrow(() -> {
