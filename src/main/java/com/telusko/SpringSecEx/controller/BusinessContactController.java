@@ -1,7 +1,7 @@
 package com.telusko.SpringSecEx.controller;
 
 import com.telusko.SpringSecEx.model.BusinessContact;
-import com.telusko.SpringSecEx.model.BusinessPartnerDTO;
+import com.telusko.SpringSecEx.model.BusinessPartners;
 import com.telusko.SpringSecEx.service.BusinessContactService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class BusinessContactController {
     }
 
     @GetMapping("/businessPartners/{TinNo}")
-    public ResponseEntity<List<BusinessPartnerDTO>> getBusinessPartners(@PathVariable String TinNo) {
-        List<BusinessPartnerDTO> partners = businessContactService.getBusinessPartnersByTinNo(TinNo);
+    public ResponseEntity<List<BusinessPartners>> getBusinessPartners(@PathVariable String TinNo) {
+        List<BusinessPartners> partners = businessContactService.getBusinessPartnersByTinNo(TinNo);
         return ResponseEntity.ok(partners);
     }
 }

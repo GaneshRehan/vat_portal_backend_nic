@@ -1,7 +1,7 @@
 package com.telusko.SpringSecEx.service;
 
 import com.telusko.SpringSecEx.model.BusinessContact;
-import com.telusko.SpringSecEx.model.BusinessPartnerDTO;
+import com.telusko.SpringSecEx.model.BusinessPartners;
 import com.telusko.SpringSecEx.repo.BusinessContactRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +36,14 @@ public class BusinessContactService {
         return savedContact;
     }
 
-    public List<BusinessPartnerDTO> getBusinessPartnersByTinNo(String tinNo) {
+    public List<BusinessPartners> getBusinessPartnersByTinNo(String tinNo) {
         logger.info("Fetching business partners for tinNo: {}", tinNo);
+        
         List<BusinessContact> contacts = businessContactRepo.findAllByTinNoIgnoreCase(tinNo);
-        List<BusinessPartnerDTO> partners = contacts.stream().map(contact -> {
-            BusinessPartnerDTO dto = new BusinessPartnerDTO();
-            dto.setId(contact.getSlNo());
+        List<BusinessPartners> partners = contacts.stream().map(contact -> {
+            
+            BusinessPartners dto = new BusinessPartners();
+            dto.setId(contact.getId()); 
             dto.setName(contact.getPersonName());
             dto.setFatherName(contact.getFatherName());
             dto.setStreet(contact.getPresentAddress());
@@ -53,6 +55,7 @@ public class BusinessContactService {
             dto.setDateOfLeaving(contact.getDateOfLeaving());
             dto.setType(contact.getPartnerType());
             return dto;
+
         }).collect(Collectors.toList());
         logger.info("Found {} business partners for tinNo: {}", partners.size(), tinNo);
         return partners;

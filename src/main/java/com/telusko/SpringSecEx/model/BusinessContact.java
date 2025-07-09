@@ -10,7 +10,7 @@ import lombok.Data;
 public class BusinessContact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "tinNo is required")
     private String tinNo;

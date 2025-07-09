@@ -21,6 +21,9 @@ public class BusinessPartners {
     @Column(name = "name")
     private String name; // Maps to personName
 
+    @Column(name = "father_name")
+    private String fatherName;
+
     @Column(name = "address")
     private String street; // Maps to presentAddress
 
