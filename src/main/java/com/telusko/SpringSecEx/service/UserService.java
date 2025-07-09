@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.telusko.SpringSecEx.model.Users;
 import com.telusko.SpringSecEx.repo.UserRepo;
 import com.telusko.SpringSecEx.dto.InspectorDto;
+import com.telusko.SpringSecEx.dto.LoginRequest;
+import com.telusko.SpringSecEx.dto.LoginResponse;
 import com.telusko.SpringSecEx.model.UserPrincipal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,24 +35,29 @@ public class UserService {
         return repo.save(user);
     }
 
-    public String verify(Users user) {
+    public LoginResponse verify(LoginRequest request) {
         try {
-            // Step 1: Authenticate
             Authentication authentication = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-            );
-    
-            // Step 2: Generate token using authenticated principal
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+
             if (authentication.isAuthenticated()) {
                 UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-                return jwtService.generateToken(principal.getUsername());
+
+                Users user = repo.findByUsername(principal.getUsername());
+                if (user == null) {
+                    throw new RuntimeException("User not found");
+                }
+
+                String token = jwtService.generateToken(principal.getUsername());
+
+                return new LoginResponse(token, user.getRole(), user.getDesignation());
             }
-    
+
         } catch (Exception e) {
-            e.printStackTrace(); // Optional: log this properly
+            e.printStackTrace();
         }
-    
-        return "Authentication failed";
+
+        return null;
     }
 
     public List<InspectorDto> getAllInspectors() {
@@ -61,4 +68,3 @@ public class UserService {
     }
 
 }
-   
