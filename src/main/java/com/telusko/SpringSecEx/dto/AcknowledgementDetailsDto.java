@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
+import com.telusko.SpringSecEx.model.Users;
+
 public class AcknowledgementDetailsDto {
 
     private Long ackNo;
@@ -17,7 +19,7 @@ public class AcknowledgementDetailsDto {
     private LocalDate payDate;
     private String bankName;
     private BigDecimal totalAmount;
-    private String assignedTo;
+    private Users assignedTo;
 
     // Constructor for JPQL projection
     public AcknowledgementDetailsDto(Long ackNo, OffsetDateTime createdAt, LocalDate ackDate,

@@ -13,7 +13,7 @@ public interface AcknowledgementRepo extends JpaRepository<Acknowledgement, Long
 
     @Query("SELECT new com.telusko.SpringSecEx.dto.AcknowledgementDetailsDto(" +
            "a.ackNo, a.createdAt, a.ackDate, a.registrationType, a.applicantName, a.tradeName, " +
-           "a.payMode, a.payNo, a.payDate, a.bankName, a.totalAmount, a.assignedTo) " +
+           "a.payMode, a.payNo, a.payDate, a.bankName, a.totalAmount, a.assignedTo.username) " +
            "FROM Acknowledgement a WHERE a.ackNo = :ackNo")
     AcknowledgementDetailsDto getAcknowledgementDetails(@Param("ackNo") Long ackNo);
 }

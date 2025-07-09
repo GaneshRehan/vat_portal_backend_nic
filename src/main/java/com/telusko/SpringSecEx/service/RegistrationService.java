@@ -17,6 +17,7 @@ import com.telusko.SpringSecEx.model.Registration;
 import com.telusko.SpringSecEx.repo.ApprovalDetailRepo;
 import com.telusko.SpringSecEx.repo.InspectionDetailRepo;
 import com.telusko.SpringSecEx.repo.RegistrationRepo;
+import com.telusko.SpringSecEx.repo.AcknowledgementRepo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +31,7 @@ public class RegistrationService {
     private final RegistrationRepo registrationRepo;
     private final InspectionDetailRepo inspectionRepo;
     private final ApprovalDetailRepo approvalRepo;
+    private final AcknowledgementRepo acknowledgementRepo;
 
     /**
      * 3.1 Retrieves all registrations assigned to a checker with the specified
@@ -196,7 +198,7 @@ public class RegistrationService {
     }
 
     public AcknowledgementDetailsDto getAcknowledgementDetails(Long ackNo) {
-        return registrationRepo.getAcknowledgementDetails(ackNo);
+        return acknowledgementRepo.getAcknowledgementDetails(ackNo);
     }
 
 }
