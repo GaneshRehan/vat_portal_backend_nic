@@ -6,6 +6,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Data
 @Entity
 @Table(name = "business_contacts")
@@ -78,6 +80,5 @@ public class BusinessContact {
     @Column(name = "residential_cert_no")
     private String residentialCertNo;
 
-    @OneToMany(mappedBy = "businessContact", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BusinessPartners> partners;
+
 }

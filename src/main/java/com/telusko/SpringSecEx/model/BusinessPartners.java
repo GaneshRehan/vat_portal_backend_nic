@@ -2,6 +2,8 @@ package com.telusko.SpringSecEx.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,11 +16,7 @@ public class BusinessPartners {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "partner_id")
     private Long id; // Maps to partner_id (primary key)
-    
-    // link back to main contact
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_contact_id", nullable = false)
-    private BusinessContact businessContact;
+
 
     @Column(name = "name")
     private String name; // Maps to personName
