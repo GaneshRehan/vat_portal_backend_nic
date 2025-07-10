@@ -1,7 +1,11 @@
 package com.telusko.SpringSecEx.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +36,7 @@ public class RegistrationService {
     private final InspectionDetailRepo inspectionRepo;
     private final ApprovalDetailRepo approvalRepo;
     private final AcknowledgementRepo acknowledgementRepo;
+    private final TinService tinService;
 
     /**
      * 3.1 Retrieves all registrations assigned to a checker with the specified
@@ -181,18 +186,26 @@ public class RegistrationService {
         approval.setAllYes(dto.getAllYes());
         approval.setApproverComments(dto.getApproverComments());
         approval.setApprovalStatus(dto.getApprovalStatus());
+        approval.setApprovalIn(dto.getApprovalIn());
+        approval.setApprovedAt(LocalDateTime.now());
 
         if ("Approved".equalsIgnoreCase(dto.getApprovalStatus())) {
-            String tin = UUID.randomUUID().toString().substring(0, 10).toUpperCase();
+            String tin = tinService.generateDailyResetTin();
+
             approval.setTinAssigned(tin);
             reg.setTinNumber(tin);
+            approval.setTinAssigned(tin);
             reg.setStatus("Approved");
         } else {
             reg.setStatus("Rejected");
         }
 
-        registrationRepo.save(reg);
+        // 1) Save approval first and flush
         approvalRepo.save(approval);
+
+        
+        // 3) Then update registration
+        registrationRepo.save(reg);
 
         return reg.getTinNumber();
     }
