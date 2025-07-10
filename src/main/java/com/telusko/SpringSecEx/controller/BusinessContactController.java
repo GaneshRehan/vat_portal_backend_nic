@@ -18,7 +18,7 @@ public class BusinessContactController {
     private BusinessContactService businessContactService;
 
     @GetMapping("/businessContact/{tinNo}")
-    public ResponseEntity<List<BusinessContact>> getBusinessContact(@PathVariable String tinNo) {
+    public ResponseEntity<?> getBusinessContact(@PathVariable String tinNo) {
         List<BusinessContact> contacts = businessContactService.getBusinessContactsByTinNo(tinNo);
         return ResponseEntity.ok(contacts);
     }
