@@ -47,7 +47,7 @@ public class UserService {
         }
 
         String token = jwtService.generateToken(user.getUsername());
-        return new LoginResponse(token, user.getRole(), user.getDesignation());
+        return new LoginResponse(token, user.getRole(), user.getDesignation(), user.getUserId());
     }
 
     public List<InspectorDto> getAllInspectors() {
