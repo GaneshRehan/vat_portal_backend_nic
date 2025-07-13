@@ -1,5 +1,10 @@
 package com.telusko.SpringSecEx.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +20,8 @@ public class Payment {
     @Column(name = "payment_id")
     private Long paymentId;
 
-    @Column(name = "tin")
-    private String tin;
+    @Column(name = "tin_no")
+    private String tinNo;
 
     @Column(name = "suspense_name")
     private String suspenseName;
@@ -41,4 +46,29 @@ public class Payment {
 
     @Column(name = "mode")
     private String mode;
+
+    @Column(name = "court_fee_no", length = 50)
+    private String courtFeeNo;
+
+    @Column(name = "court_fee_date")
+    private LocalDateTime paymentDate;
+
+    @Column(length = 20)
+    private String micrCode;
+
+    @Column(name = "remarks", columnDefinition = "TEXT")
+    private String remarks;
+
+    @Column(name = "amount", precision = 12, scale = 2)
+    private BigDecimal amount;
+
+    @Column(name = "interest", precision = 12, scale = 2)
+    private BigDecimal interest;
+
+    @Column(name = "penalty", precision = 12, scale = 2)
+    private BigDecimal penalty;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }
